@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "nextawsblog",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authnextawsblog7cd5b7d2",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
