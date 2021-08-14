@@ -8,8 +8,10 @@ const MyPosts = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    if (posts.length < 1) {
+      fetchPosts();
+    }
+  }, [posts]);
 
   const fetchPosts = async () => {
     const { username } = await Auth.currentAuthenticatedUser();
@@ -21,13 +23,15 @@ const MyPosts = () => {
     console.log(posts);
   };
 
-  const removePost = async (post) => {
-    API.graphql({
+  const removePost = async (id) => {
+    await API.graphql({
       query: deletePost,
-      variables: { post },
+      variables: { input: { id } },
       authMode: "AMAZON_COGNITO_USER_POOLS",
     }).catch((err) => console.log(err));
+    fetchPosts();
   };
+
   return (
     <div className="max-w-7xl mx-auto">
       <h1 className="text-3xl font-semibold tracking-wide mt-6 mb-2">Posts</h1>
@@ -50,7 +54,7 @@ const MyPosts = () => {
                     <a className="text-sm mr-4 text-indigo-600">View Post</a>
                   </Link>
                   <p
-                    onClick={() => removePost(post)}
+                    onClick={() => removePost(post.id)}
                     className="cursor-pointer text-sm mr-4 text-pink-600"
                   >
                     Delete Post
