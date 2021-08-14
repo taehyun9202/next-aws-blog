@@ -1,42 +1,43 @@
 import React, { useEffect, useState } from "react";
-import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
+import { useRouter } from "next/router";
 import { API } from "aws-amplify";
 import { updatePost } from "../../graphql/mutations";
 import { getPost } from "../../graphql/queries";
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 
 const EditPost = () => {
   const router = useRouter();
   const [post, setPost] = useState(null);
-  // const { id } = router.query;
+  const { id } = router.query;
 
-  // console.log(id);
-  // useEffect(() => {
-  //   fetchPost();
-  // }, []);
+  console.log(id);
+  useEffect(() => {
+    fetchPost();
+  }, [id]);
 
-  // const fetchPost = async () => {
-  //   if (!id) return;
-  //   const postData = await API.graphql({
-  //     query: getPost,
-  //     variables: { id },
-  //   });
-  //   setPost(postData.data.getPost);
-  // };
+  const fetchPost = async () => {
+    if (!id) return;
+    const postData = await API.graphql({
+      query: getPost,
+      variables: { id },
+    });
+    setPost(postData.data.getPost);
+  };
 
-  // const onChangeHandler = (e) => {
-  //   setPost({ ...post, [e.target.name]: e.target.value });
-  // };
+  const onChangeHandler = (e) => {
+    setPost({ ...post, [e.target.name]: e.target.value });
+  };
 
-  // const { title, content } = post;
   const updateCurrentPost = async () => {
-    // if (!title || !content) return null;
-    // await API.graphql({
-    //   query: updatePost,
-    //   variables: { input: { titlem, content, id } },
-    //   authMode: "AMAZON_COGNITO_USER_POOLS",
-    // });
-    // router.push(`./posts/${post.id}`);
+    const { title, content } = post;
+    if (!title || !content) return null;
+    await API.graphql({
+      query: updatePost,
+      variables: { input: { title, content, id } },
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    });
+    router.push(`/posts/${post.id}`);
   };
 
   if (!post) return null;

@@ -47,5 +47,11 @@
         ]
       }
     }
+  },
+  "storage": {
+    "projectimages": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

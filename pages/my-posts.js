@@ -21,35 +21,43 @@ const MyPosts = () => {
     console.log(posts);
   };
 
-  const removePost = (id) => {};
+  const removePost = async (post) => {
+    API.graphql({
+      query: deletePost,
+      variables: { post },
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    }).catch((err) => console.log(err));
+  };
   return (
     <div className="max-w-7xl mx-auto">
       <h1 className="text-3xl font-semibold tracking-wide mt-6 mb-2">Posts</h1>
       <div className="flex flex-col-reverse">
         {posts.length > 0 &&
           posts.map((post, idx) => (
-            <Link href={`/posts/${post.id}`} key={idx} passHref>
-              <div className="cursor-pointer border-b border-gray-300 mt-8 mb-4">
-                <p className="text-xl font-semibold">{post.title}</p>
-                <div className="flex justify-between items-center">
-                  <p className="text-gray-500 mt-2">{post.username}</p>
-                  <div>
-                    <Link href={`edit/${post.id}`}>
-                      <a className="text-sm mr-4 text-indigo-600">Edit Post</a>
-                    </Link>
-                    <Link href={`posts/${post.id}`}>
-                      <a className="text-sm mr-4 text-indigo-600">View Post</a>
-                    </Link>
-                    <button
-                      onClick={() => removePost(post.id)}
-                      className="text-sm mr-4 text-pink-600"
-                    >
-                      Delete Post
-                    </button>
-                  </div>
+            <div className="border-b border-gray-300 mt-8 mb-4" key={idx}>
+              <Link href={`/posts/${post.id}`} passHref>
+                <p className="cursor-pointer text-xl font-semibold">
+                  {post.title}
+                </p>
+              </Link>
+              <div className="flex justify-between items-center">
+                <p className="text-gray-500 mt-2">{post.username}</p>
+                <div className="flex">
+                  <Link href={`edit/${post.id}`}>
+                    <a className="text-sm mr-4 text-indigo-600">Edit Post</a>
+                  </Link>
+                  <Link href={`posts/${post.id}`}>
+                    <a className="text-sm mr-4 text-indigo-600">View Post</a>
+                  </Link>
+                  <p
+                    onClick={() => removePost(post)}
+                    className="cursor-pointer text-sm mr-4 text-pink-600"
+                  >
+                    Delete Post
+                  </p>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
       </div>
     </div>

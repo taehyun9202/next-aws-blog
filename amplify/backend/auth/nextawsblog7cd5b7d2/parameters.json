@@ -1,6 +1,6 @@
 {
     "identityPoolName": "nextawsblog7cd5b7d2_identitypool_7cd5b7d2",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "nextaw7cd5b7d2",
     "userPoolName": "nextawsblog7cd5b7d2_userpool_7cd5b7d2",
     "autoVerifiedAttributes": [

@@ -25,7 +25,9 @@ const awsmobile = {
     "aws_cognito_password_protection_settings": {
         "passwordPolicyMinLength": 8,
         "passwordPolicyCharacters": []
-    }
+    },
+    "aws_user_files_s3_bucket": "nextawsblog77b5bfe456c04b9aa5be0b2713ead79f171440-dev",
+    "aws_user_files_s3_bucket_region": "us-east-1"
 };
 
 
