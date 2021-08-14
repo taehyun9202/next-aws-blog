@@ -3,6 +3,7 @@ import { API } from "aws-amplify";
 import { useRouter } from "next/router";
 import { listPosts, getPost } from "../../graphql/queries";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const Post = ({ post }) => {
   const router = useRouter();
@@ -18,7 +19,11 @@ const Post = ({ post }) => {
       </h1>
       <p className="text-sm font-light my-4">{post.username}</p>
       <div className="mt-8">
-        <ReactMarkdown className="prose">{post.content}</ReactMarkdown>
+        <ReactMarkdown
+          className="prose"
+          remarkPlugins={[remarkGfm]}
+          children={post.content}
+        />
       </div>
     </div>
   );
@@ -48,6 +53,7 @@ export async function getStaticProps({ params }) {
     props: {
       post: postData.data.getPost,
     },
+    revalidate: 60,
   };
 }
 

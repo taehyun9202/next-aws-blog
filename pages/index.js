@@ -35,6 +35,7 @@ export default function Home() {
               <Link href={`/posts/${post.id}`} key={idx} passHref>
                 <div className="cursor-pointer border-b border-gray-300 mt-8 mb-4">
                   <p className="text-xl font-semibold">{post.title}</p>
+                  <p className="text-gray-500 mt-2">{post.username}</p>
                 </div>
               </Link>
             ))}

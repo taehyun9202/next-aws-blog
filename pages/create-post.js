@@ -19,7 +19,6 @@ const CreatePost = () => {
   };
 
   const createNewPost = async () => {
-    console.log("posting", post);
     if (!title || !content) return null;
     const id = uuid();
     post.id = id;
